@@ -1,0 +1,20 @@
+Package: WealthStabilization
+Title: Projecting Wealth Stability Utilization
+Version: 0.0.1
+Authors@R: c(person("Benjamin", "Nutter", email = "benjamin.nutter@gmail.com", role = c("aut", "cre")))
+Description: Forecasting utilization of a wealth stability idea.
+Depends:
+    R (>= 3.1.2)
+Imports:
+    checkmate (>= 1.8.0),
+    lubridate
+Suggests:
+    rmarkdown,
+    testthat
+License: GPL (>= 2)
+LazyData: true
+VignetteBuilder: knitr
+URL: https://github.com/nutterb/WealthStabilization
+BugReports: https://github.com/nutterb/WealthStabilization/issues
+RoxygenNote: 7.3.2
+NeedsCompilation: no
