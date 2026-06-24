@@ -132,7 +132,7 @@ recalculateStatus <- function(beneficiary,
   monthly_pension <- snapshot * .04 / 12
   
   PostPensionStatus <- Status[Status$date >= beneficiary$date_of_pension, ]
-  
+  PostPensionStatus$is_pension <- rep(TRUE, nrow(PostPensionStatus))
   for (i in seq_len(nrow(PostPensionStatus))) {
     PostPensionStatus$distribution <- rep(monthly_pension, 
                                           nrow(PostPensionStatus))
@@ -164,5 +164,5 @@ recalculateStatus <- function(beneficiary,
 .tierThreeDistribution <- function(income, 
                                    poverty_floor, 
                                    income_multiplier_cap) {
-  poverty_floor + min(c(income * .5, income_multiplier_cap / 2)) / 12
+  (poverty_floor + min(c(income * .5, income_multiplier_cap / 2))) / 12
 }
