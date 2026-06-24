@@ -7,7 +7,10 @@
 makeBeneficiary(
   name,
   date_of_birth,
-  date_of_entry = date_of_birth + lubridate::years(18)
+  date_of_entry = date_of_birth + lubridate::years(18),
+  date_of_pension = date_of_birth + lubridate::years(60),
+  date_of_death = date_of_birth + lubridate::years(100),
+  starting_balance = 0
 )
 }
 \arguments{
@@ -15,7 +18,17 @@ makeBeneficiary(
 
 \item{date_of_birth}{`Date(1)`. The beneficiary's date of birth.}
 
-\item{date_of_entry}{`Date(1)`. The date on which}
+\item{date_of_entry}{`Date(1)`. The date on which the beneficiary signs 
+the contract to join the trust. Defaults to the 18th birthday.}
+
+\item{date_of_pension}{`Date(1)`. The date on which the beneficiary begins
+receiving pension. Defaults to the 60th birthday.}
+
+\item{date_of_death}{`Date(1)`. The date on which the beneficiary dies.
+Defaults to the 100th birthday.}
+
+\item{starting_balance}{`numeric(1)`. The balance the beneficiary has saved
+to a Roth account on `date_of_entry`.}
 }
 \value{
 Returns an object of class `beneficiary`. The objects has the
@@ -25,6 +38,9 @@ following elements
 * `date_of_birth`: The beneficiary's date of birth. 
 * `date_of_entry`: The date the beneficiary signs the contract to join the
    trust. 
+* `date_of_pension`: The date the beneficiary begins receiving pension 
+   benefits.
+* `date_of_death`: The date the beneficiary dies.
 * `MonthlyStatus`: A `data.frame` giving monthly status of the beneficiary
    account and utiliziation up to age 100.
 }

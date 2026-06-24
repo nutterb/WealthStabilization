@@ -128,9 +128,27 @@ recalculateStatus <- function(beneficiary,
   
   # Post Pension Activity -------------------------------------------
   
+  snapshot <- utils::tail(PrePensionStatus$combined_balance, 1)
+  monthly_pension <- snapshot * .04 / 12
+  
   PostPensionStatus <- Status[Status$date >= beneficiary$date_of_pension, ]
   
   for (i in seq_len(nrow(PostPensionStatus))) {
+    PostPensionStatus$distribution <- rep(monthly_pension, 
+                                          nrow(PostPensionStatus))
+    post_distribution_balance <- 
+      if (i == 1) {
+        snapshot - monthly_pension
+      } else {
+        PostPensionStatus$combined_balance[i - 1] - 
+          PostPensionStatus$distribution[i]
+      }
+    PostPensionStatus$subaccount_interest[i] <- 
+      post_distribution_balance * 
+      PostPensionStatus$subaccount_rate[i]
+    
+    PostPensionStatus$combined_balance[i] <- 
+      post_distribution_balance + PostPensionStatus$subaccount_interest[i]
     
   }
   
@@ -146,5 +164,5 @@ recalculateStatus <- function(beneficiary,
 .tierThreeDistribution <- function(income, 
                                    poverty_floor, 
                                    income_multiplier_cap) {
-  poverty_floor + min(c(income * .5, income_multplier_cap / 2)) / 12
+  poverty_floor + min(c(income * .5, income_multiplier_cap / 2)) / 12
 }
